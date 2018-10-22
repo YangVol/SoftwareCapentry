@@ -28,3 +28,50 @@ c(nrow(gapminder), ncol(gapminder))
 skimr::skim(gapminder)
 ```
 
+
+```{r}
+lowlifeExp <- filter(gapminder,lifeExp<29)
+Mexico <- filter(gapminder,country=="Mexico")
+filter(gapminder,country %in% c("Mexico","Peru"))
+x <- filter(gapminder, country == "Sweden") 
+mean(filter(gapminder,country=="Sweden")$lifeExp)
+```
+
+```{r}
+select(gapminder,year,lifeExp)
+select(gapminder,-continent,-lifeExp)
+gap_cambodia <- filter(gapminder,country=="Cambodia")
+gap_cambodia2 <- select(gap_cambodia,-continent,-lifeExp)
+gap_cambodia3 <- select(filter(gapminder,country=="Cambodia"),-continent,-lifeExp)
+```
+
+```{r}
+# shortcut for pipe operator: ctl+shift+M
+gapminder %>% head()
+gap_cambodia <- gapminder %>% filter(country=="Cambodia")
+gap_cambodia2 <- select(gap_cambodia,-continent,-lifeExp)
+
+gap_cambodia <- gapminder %>% 
+  filter(country=="Cambodia") %>% 
+  select(-continent,-lifeExp)
+```
+
+
+```{r}
+gapminder %>% 
+  mutate(index=1:nrow(gapminder))
+
+gapminder %>% 
+  mutate(planet="earth")
+
+gapminder %>% 
+  mutate(GDP=pop*gdpPercap)
+
+gapminder %>% 
+  filter(country %in% c("Egypt","Vietnam")) %>% 
+  mutate(GDP=pop*gdpPercap) %>% 
+    mutate(maxGDP=max(GDP))
+
+
+```
+
