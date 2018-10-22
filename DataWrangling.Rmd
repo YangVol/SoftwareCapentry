@@ -1,0 +1,30 @@
+---
+title: "DataWrangling"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse) ## install.packages("tidyverse")
+```
+
+```{r}
+gapminder <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder.csv')
+
+gapminder
+head(gapminder)
+tail(gapminder)
+str(gapminder)
+summary(gapminder)
+library(skimr) # install.packages('skimr')
+skim(gapminder)
+names(gapminder)
+ncol(gapminder)
+nrow(gapminder)
+c(nrow(gapminder), ncol(gapminder))
+skimr::skim(gapminder)
+```
+
