@@ -43,3 +43,82 @@ ggplot(data = ca) +
     theme(legend.title=element_blank())
 ```
 
+```{r}
+ggplot(data = ca) +
+    geom_point(aes(x = year, y = visitors, color = park_name)) +
+    labs(x = "Year",
+       y = "Visitation",
+       title = "California National Park Visitation") +
+    theme_bw() +
+    theme(legend.title=element_blank())
+```
+
+```{r}
+ggplot(data = se) +
+    geom_point(aes(x = year, y = visitors)) +
+    facet_wrap(~ state)
+```
+
+
+```{r}
+ggplot(data = se) +
+     geom_point(aes(x = year, y = visitors, color = park_name)) +
+     facet_wrap(~ state, scales = "free")
+```
+
+```{r}
+ggplot(data = se) + 
+  geom_jitter(aes(x = park_name, y = visitors, color = park_name), 
+               width = 0.1, alpha = 0.4) +
+  coord_flip() +
+  theme(legend.position = "none") 
+```
+
+```{r}
+ggplot(data = acadia) + 
+  geom_point(aes(x = year, y = visitors)) +
+  geom_line(aes(x = year, y = visitors)) +
+  geom_smooth(aes(x = year, y = visitors)) +
+#  labs(title = "Acadia National Park Visitation",
+ #      y = "Visitation",
+  #     x = "Year") +
+  theme_bw()
+```
+
+```{r}
+ggplot(data = acadia, aes(x = year, y = visitors)) + 
+  geom_point() +
+  geom_line() +
+  geom_smooth(color = "red") +
+  labs(title = "Acadia National Park Visitation",
+       y = "Visitation",
+       x = "Year") +
+  theme_bw()
+```
+
+```{r}
+myplot <- ggplot(data = visit_16, aes(x = state, y = visitors, fill = park_name)) + 
+  geom_bar(stat = "identity",position = "dodge")
+ggsave("test1.png",myplot)
+```
+
+```{r}
+acad_vis <- ggplot(data = acadia, aes(x = year, y = visitors)) + 
+  geom_point() +
+  geom_line() +
+  geom_smooth(color = "red") +
+  labs(title = "Acadia National Park Visitation",
+       y = "Visitation",
+       x = "Year") +
+  theme_bw()
+
+ggplotly(acad_vis)
+```
+
+
+
+
+
+
+
+
