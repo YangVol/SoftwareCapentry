@@ -119,4 +119,29 @@ gap_summarise
 ```
 
 
+```{r}
+co2 <- read_csv("https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/co2.csv")
+
+co2 %>% head(10)
+co2 %>% tail(10)
+co2 %>% dim()
+
+gap_2007 <- gapminder %>% 
+  filter(year==2007)
+
+gap_2007 %>% dim()
+
+#join co2 into gapminder
+
+lj <- left_join(gap_2007,co2,by="country")
+
+lj2 <- left_join(co2,gap_2007,by="country")
+
+
+lj %>% dim()
+rj <- right_join(gap_2007,co2)
+
+rj %>% summary()
+```
+
 
