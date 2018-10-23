@@ -69,9 +69,54 @@ gapminder %>%
 
 gapminder %>% 
   filter(country %in% c("Egypt","Vietnam")) %>% 
-  mutate(GDP=pop*gdpPercap) %>% 
-    mutate(maxGDP=max(GDP))
+  #mutate(GDP=pop*gdpPercap) %>% 
+    mutate(maxGDP=max(pop*gdpPercap))
 
-
+gapminder %>% 
+  filter(country %in% c("Egypt","Vietnam")) %>% 
+  mutate(GDP=pop*gdpPercap,maxGDP=max(GDP)) 
 ```
+
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+gap_grouped <- gapminder %>% 
+  group_by(country) %>% 
+  mutate(gdp=pop*gdpPercap,max_gdp=max(gdp)) %>% 
+  ungroup()
+
+gap_grouped <- gapminder %>% 
+  group_by(country) %>% 
+  mutate(max_gdp=max(pop*gdpPercap)) %>% 
+  ungroup()
+
+#with summarise
+gap_summarise <- gapminder %>% 
+  group_by(country) %>% 
+  mutate(gdp=pop*gdpPercap) %>% 
+  summarise(max_gdp=max(gdp)) %>% 
+  ungroup()
+
+gap_grouped 
+gap_summarise
+```
+
+
+
+```{r}
+#arrage
+gap_summarise <- gapminder %>% 
+  group_by(country) %>% 
+  mutate(gdp=pop*gdpPercap) %>% 
+  summarise(max_gdp=max(gdp)) %>% 
+  ungroup() %>% 
+  arrange(desc(max_gdp))
+
+gap_summarise
+```
+
+
 
