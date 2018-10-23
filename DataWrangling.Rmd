@@ -145,3 +145,91 @@ rj %>% summary()
 ```
 
 
+
+
+```{r}
+# cleaning and changing wide data to long data sets
+gap_wide <- readr::read_csv('https://raw.githubusercontent.com/OHI-Science/data-science-training/master/data/gapminder_wide.csv')
+
+gap_long <- gap_wide %>% 
+  gather(key=obstype_year,value=obs_values,-country,-continent)
+
+gap_wide
+
+
+gap_long <- gap_wide %>% 
+  gather(key   = obstype_year,
+         value = obs_values,
+         -continent, -country) %>%
+  separate(obstype_year,
+           into = c('obs_type','year'),
+           sep = "_",convert=TRUE)
+
+
+#plot
+canada_df <- gap_long %>% 
+  filter(country=="Canada",obs_type=="lifeExp")
+
+ggplot(canada_df,aes(x=year,y=obs_values))+
+  geom_line()
+
+```
+
+```{r}
+life_df <- gap_long %>% 
+  filter(obs_type=="lifeExp",continent=="Americas")
+
+ggplot(life_df,aes(x=year,y=obs_values,color=country))+
+  geom_line()
+
+
+mean_life <- gap_long %>% 
+  filter(obs_type=="lifeExp",year>1980) %>% 
+  group_by(continent,year) %>% 
+  summarize(life_ave=mean(obs_values)) %>% 
+  ungroup()
+
+
+mean_life_country <- gap_long %>% 
+  filter(obs_type=="lifeExp",year>1980) %>% 
+ # group_by(continent,year) %>% 
+ # summarize(life_ave=mean(obs_values)) %>% 
+#  ungroup()
+
+
+
+
+  ggplot(mean_life,aes(x=year,y=life_ave,color=continent))+
+    geom_line()
+  
+
+```
+
+
+
+
+```{r}
+gap_normal <- gap_long %>% 
+  spread(key = obs_type,value = obs_values)
+
+gap_wide
+
+gap_normal
+
+gap_wide2 <- unite(gap_long,type_year,sep="_",-continent,-country,-obs_values,remove=TRUE) %>% 
+  spread(key=type_year,value = obs_values)
+
+#Alternatively
+gap_wide3 <- unite(gap_long,type_year,obs_type,sep="_",year,remove=TRUE) %>% 
+  spread(key=type_year,value = obs_values)
+
+
+
+```
+
+
+
+
+
+
+
